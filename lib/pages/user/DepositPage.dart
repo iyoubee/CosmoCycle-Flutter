@@ -33,15 +33,53 @@ class _DepositPageState extends State<DepositPage> {
               const SizedBox(
                 height: 20,
               ),
-              const AddDepositButton(),
+              FutureBuilder(
+                future: useUserDeposit.getToken(request),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return const Text('Error fetching data');
+                  } else if (snapshot.data == null || !(snapshot.data is Map)) {
+                    return const Center(
+                      child: Text('Token tidak ditemukan'),
+                    );
+                  } else {
+                    final token = snapshot.data['token'];
+
+                    return Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Token:",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            token.toString(),
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+              ),
               const SizedBox(
                 height: 20,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  const Text(
+                  Text(
                     "History",
                     style: TextStyle(
                         color: Colors.black87,

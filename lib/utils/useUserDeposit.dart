@@ -4,8 +4,8 @@ import 'package:cosmocycle/models/Deposit.dart';
 
 class UseUserDeposit {
   Future<List<Deposit>> getUserDeposit(request) async {
-    var response = await request
-        .get('https://trashsure.iyoubee.xyz/flutter/user/deposit/get/');
+    var response =
+        await request.get('http://192.168.56.1:8000/api/user/deposit/get');
 
     var data = response;
 
@@ -18,11 +18,9 @@ class UseUserDeposit {
     return depositList;
   }
 
-  addDeposit(context, request, jenisSampah, beratSampah) async {
-    var response = await request.post(
-        'https://trashsure.iyoubee.xyz/flutter/user/deposit/add/',
-        {"jenisSampah": jenisSampah, "beratSampah": beratSampah});
+  getToken(request) async {
+    var response = await request.get('http://192.168.56.1:8000/api/user/token');
 
-    return response['status'];
+    return response;
   }
 }
