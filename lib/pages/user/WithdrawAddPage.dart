@@ -28,6 +28,21 @@ class _WithdrawAddPageState extends State<WithdrawAddPage> {
   String _provider_wallet = "ovo";
   String _provider_bank = 'bca';
   String _accountNo = "";
+  String? validateAccountNo(String? value, String? method) {
+    if (value == null || value.isEmpty) {
+      return 'Account number is required';
+    }
+
+    if (method == 'bank transfer' && value.length != 9) {
+      return 'Bank transfer account number must be 9 digits';
+    }
+
+    if (method == 'e-wallet' && (value.length < 9 || !value.startsWith('08'))) {
+      return 'E-Wallet account number is not valid';
+    }
+
+    return null;
+  }
 
   void _submit(context, request) {
     showDialog<void>(
@@ -185,6 +200,8 @@ class _WithdrawAddPageState extends State<WithdrawAddPage> {
                             return 'Use only numbers!';
                           } else if (int.parse(value) <= 0) {
                             return 'Harus lebih dari 0';
+                          } else if (int.parse(value) < 25000) {
+                            return 'Minimum 25000';
                           }
                           return null;
                         },
@@ -312,14 +329,7 @@ class _WithdrawAddPageState extends State<WithdrawAddPage> {
                           border: OutlineInputBorder(),
                         ),
                         keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value == null ||
-                              value.isEmpty ||
-                              !RegExp(r'^[0-9]{10}$').hasMatch(value)) {
-                            return 'Account number must be 10 digits';
-                          }
-                          return null;
-                        },
+                        validator: (value) => validateAccountNo(value, _method),
                         onFieldSubmitted: (value) {
                           setState(() {
                             _accountNo = value;
