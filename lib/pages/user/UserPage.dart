@@ -71,7 +71,8 @@ class _UserPageState extends State<UserPage> {
                 onPressed: () async {
                   // do something
                   final response = await request
-                      .logout("http://192.168.56.1:8000/api/logout")
+                      .logout(
+                          "https://web-production-276d.up.railway.app/api/logout")
                       .then((value) => {
                             if (value['status'] == 200)
                               {

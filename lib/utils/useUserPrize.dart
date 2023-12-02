@@ -7,8 +7,8 @@ import 'package:cosmocycle/models/UserData.dart';
 class UseUserPrize {
   // To fetch prize data from admin
   Future<List<Prize>> getPrize(request) async {
-    var response =
-        await request.get('http://192.168.56.1:8000/api/user/prize/get');
+    var response = await request
+        .get('https://web-production-276d.up.railway.app/api/user/prize/get');
 
     // melakukan decode response menjadi bentuk json
     var data = response;
@@ -25,8 +25,8 @@ class UseUserPrize {
 
   // To fetch redeemed prize data from certain user
   Future<List<RedeemedPrize>> getRedeemedPrize(request) async {
-    var response =
-        await request.get('http://192.168.56.1:8000/api/user/prize/redeem/get');
+    var response = await request.get(
+        'https://web-production-276d.up.railway.app/api/user/prize/redeem/get');
 
     // melakukan decode response menjadi bentuk json
     var data = response;
@@ -43,24 +43,26 @@ class UseUserPrize {
 
   // Method to redeem the prize
   redeemPrize(context, pk, request) async {
-    var response = await request
-        .post('http://192.168.56.1:8000/api/user/prize/redeem', {"id": pk});
+    var response = await request.post(
+        'https://web-production-276d.up.railway.app/api/user/prize/redeem',
+        {"id": pk});
 
     return response['message'];
   }
 
   // Method to use the prize
   usePrize(context, pk, request) async {
-    var response = await request
-        .post('http://192.168.56.1:8000/api/user/prize/redeem/use', {"id": pk});
+    var response = await request.post(
+        'https://web-production-276d.up.railway.app/api/user/prize/redeem/use',
+        {"id": pk});
 
     return response['message'];
   }
 
   // Method to get user points
   Future<int> getPoints(request) async {
-    var response =
-        await request.get('http://192.168.56.1:8000/api/user/data/get');
+    var response = await request
+        .get('https://web-production-276d.up.railway.app/api/user/data/get');
 
     var data = response;
 

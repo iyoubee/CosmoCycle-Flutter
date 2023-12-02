@@ -4,8 +4,8 @@ import 'package:cosmocycle/models/Deposit.dart';
 
 class UseUserDeposit {
   Future<List<Deposit>> getUserDeposit(request) async {
-    var response =
-        await request.get('http://192.168.56.1:8000/api/user/deposit/get');
+    var response = await request
+        .get('https://web-production-276d.up.railway.app/api/user/deposit/get');
 
     var data = response;
 
@@ -19,7 +19,8 @@ class UseUserDeposit {
   }
 
   getToken(request) async {
-    var response = await request.get('http://192.168.56.1:8000/api/user/token');
+    var response = await request
+        .get('https://web-production-276d.up.railway.app/api/user/token');
 
     return response;
   }

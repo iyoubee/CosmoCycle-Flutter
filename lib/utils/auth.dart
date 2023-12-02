@@ -36,7 +36,7 @@ class CookieRequest {
   }
 
   Future<dynamic> login(dynamic data) async {
-    String url = "http://192.168.56.1:8000/api/login";
+    String url = "https://web-production-276d.up.railway.app/api/login";
     if (kIsWeb) {
       dynamic c = _client;
       c.withCredentials = true;
@@ -59,7 +59,7 @@ class CookieRequest {
   }
 
   Future<http.Response> login2(dynamic data) async {
-    String url = "http://192.168.56.1:8000/api/login";
+    String url = "https://web-production-276d.up.railway.app/api/login";
     if (kIsWeb) {
       dynamic c = _client;
       c.withCredentials = true;
@@ -82,7 +82,7 @@ class CookieRequest {
   }
 
   Future<dynamic> register(dynamic data) async {
-    String url = "http://192.168.56.1:8000/api/register";
+    String url = "https://web-production-276d.up.railway.app/api/register";
     if (kIsWeb) {
       dynamic c = _client;
       c.withCredentials = true;
