@@ -138,6 +138,8 @@ class _WithdrawPageState extends State<WithdrawPage> {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (_, index) => CardWithdraw(
                               date: snapshot.data![index].fields.date,
+                              metode: snapshot.data![index].fields.method,
+                              accountNo: snapshot.data![index].fields.accountNo,
                               jumlah: snapshot.data![index].fields.amount
                                   .toString()));
                     }

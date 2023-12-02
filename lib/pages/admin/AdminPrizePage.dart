@@ -60,6 +60,7 @@ class _AdminPrizePage extends State<AdminPrizePage> {
                           pk: snapshot.data![index].pk.toString(),
                           usage: "delete",
                           nama: snapshot.data![index].fields.title,
+                          picture: snapshot.data![index].fields.picture,
                           poin: snapshot.data![index].fields.poin.toString(),
                           stok: snapshot.data![index].fields.stok.toString(),
                           desc: snapshot.data![index].fields.desc,
@@ -76,7 +77,10 @@ class _AdminPrizePage extends State<AdminPrizePage> {
           },
           tooltip: 'Add Prize',
           backgroundColor: const Color.fromARGB(255, 5, 89, 91),
-          child: const Icon(Icons.add),
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ));
   }
 }

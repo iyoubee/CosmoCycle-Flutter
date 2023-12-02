@@ -11,6 +11,7 @@ class AdminPrizeCard extends StatelessWidget {
       required this.pk,
       required this.usage,
       required this.nama,
+      required this.picture,
       required this.poin,
       required this.stok,
       required this.desc,
@@ -25,6 +26,7 @@ class AdminPrizeCard extends StatelessWidget {
   final String stok;
   final String desc;
   final String usage;
+  final String picture;
 
   final UseAdminPrize useAdminPrize;
   final Function setState;
@@ -50,8 +52,8 @@ class AdminPrizeCard extends StatelessWidget {
               topRight: Radius.circular(20),
               topLeft: Radius.circular(20),
             ),
-            child: Image.asset(
-              "lib/assets/voucher.jpg",
+            child: Image.network(
+              picture,
               width: double.infinity,
               height: 130,
               fit: BoxFit.cover,

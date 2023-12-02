@@ -69,7 +69,10 @@ class _AdminDepositPage extends State<AdminDepositPage> {
           },
           tooltip: 'Add Deposit',
           backgroundColor: const Color.fromARGB(255, 5, 89, 91),
-          child: const Icon(Icons.add),
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ));
   }
 }
