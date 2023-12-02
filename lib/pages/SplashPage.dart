@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:cosmocycle/pages/LandingPage.dart';
+import 'package:cosmocycle/pages/user/UserPage.dart';
 import 'package:cosmocycle/utils/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -25,10 +26,10 @@ class _SplashPageState extends State<SplashPage> {
     if (request.loggedIn) {
       await Future.delayed(const Duration(
           seconds: 3)); // Add a 3-second delay// Add a small delay
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const UserPage(idx: 0)),
-      // );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const UserPage(idx: 0)),
+      );
     } else {
       await Future.delayed(const Duration(
           seconds: 3)); // Add a 3-second delay // Add a small delay
