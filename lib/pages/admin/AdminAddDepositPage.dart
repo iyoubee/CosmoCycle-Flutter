@@ -6,6 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:cosmocycle/utils/useAdminDeposit.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter/services.dart';
+
+const List<String> list = <String>['Plastic', 'Paper', 'Glass', "Metal"];
 
 class AdminAddDepositPage extends StatefulWidget {
   const AdminAddDepositPage({super.key});
@@ -18,10 +21,13 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
   UseAdminDeposit useAdminDeposit = UseAdminDeposit();
 
   final GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKeyToken = GlobalKey();
 
-  String berat = "";
-  var _jenis;
-  var user;
+  String _token = "";
+  String _username = "";
+  int _id = -1;
+  String _weight = "";
+  String _waste_type = "plastic";
 
   void _submit(context, request) {
     showDialog<void>(
@@ -39,7 +45,7 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
                         style: TextStyle(fontWeight: FontWeight.w700))),
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Text(user),
+                  child: Text(_username),
                 ),
                 const SizedBox(
                   height: 10,
@@ -50,7 +56,7 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
                         style: TextStyle(fontWeight: FontWeight.w700))),
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Text(_jenis),
+                  child: Text(_waste_type),
                 ),
                 const SizedBox(
                   height: 10,
@@ -61,7 +67,7 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
                         style: TextStyle(fontWeight: FontWeight.w700))),
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Text("$berat Kg"),
+                  child: Text("$_weight Kg"),
                 )
               ],
             ),
@@ -92,7 +98,7 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
                   child: const Text('Konfirmasi'),
                   onPressed: () async {
                     int response = await useAdminDeposit.addDeposit(
-                        context, request, user, _jenis, berat);
+                        context, request, _username, _waste_type, _weight);
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -130,6 +136,42 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
     );
   }
 
+  void _search(context, request) async {
+    try {
+      var response = await useAdminDeposit.getUser(context, request, _token);
+      // Assuming the response contains 'id' and 'username' fields
+      int userId = response['id'];
+      String username = response['username'];
+
+      setState(() {
+        _id = userId;
+        _username = username;
+      });
+
+      Flushbar(
+        backgroundColor: const Color.fromARGB(255, 29, 167, 86),
+        flushbarPosition: FlushbarPosition.TOP,
+        title: "Berhasil",
+        duration: const Duration(seconds: 3),
+        message: "User ditemukan",
+      ).show(context);
+    } catch (error) {
+      // Handle errors, if any
+      setState(() {
+        _id = -1;
+        _username = "";
+      });
+      Flushbar(
+        backgroundColor: const Color.fromARGB(255, 244, 105, 77),
+        flushbarPosition: FlushbarPosition.TOP,
+        title: "Gagal",
+        duration: const Duration(seconds: 3),
+        message: "Error: $error",
+      ).show(context);
+      print("Error: $error");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
@@ -154,194 +196,190 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
             ),
           ],
         ),
-        body: FutureBuilder(
-            future: useAdminDeposit.getUsername(request),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.data == null) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                if (!snapshot.data.isNotEmpty) {
-                  return Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(
-                        vertical: MediaQuery.of(context).size.height / 4),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "lib/assets/prize.jpg",
-                          width: 50,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const Text(
-                          "Belum ada user yang dapat diberikan deposit",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                } else {
-                  return SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: <Widget>[
-                          const Align(
-                            alignment: Alignment.topLeft,
-                            child: Text("Masukan Data Deposit",
-                                style: TextStyle(
-                                  fontSize: 24,
-                                )),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                DropdownButtonFormField(
-                                    decoration: const InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(20.0)),
-                                          borderSide: BorderSide(
-                                              color: Colors.black, width: 1.0),
-                                        ),
-                                        border: OutlineInputBorder()),
-                                    // ignore: prefer_const_literals_to_create_immutables
-                                    items: snapshot.data
-                                        .map<DropdownMenuItem<String>>((idx) {
-                                      return DropdownMenuItem<String>(
-                                        value: idx.fields.email,
-                                        child: Text(idx.fields.email),
-                                      );
-                                    }).toList(),
-                                    hint: const Text("Pilih User"),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        user = value;
-                                        // measureList.add(measure);
-                                      });
-                                    },
-                                    validator: (value) {
-                                      if (value == null) {
-                                        return 'Pilih user';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (value) {
-                                      setState(() {
-                                        user = value;
-                                      });
-                                    }),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                DropdownButtonFormField(
-                                    decoration: const InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(20.0)),
-                                          borderSide: BorderSide(
-                                              color: Colors.black, width: 1.0),
-                                        ),
-                                        border: OutlineInputBorder()),
-                                    // ignore: prefer_const_literals_to_create_immutables
-                                    items: [
-                                      const DropdownMenuItem(
-                                        value: "Plastik",
-                                        child: Text("Plastik"),
-                                      ),
-                                      const DropdownMenuItem(
-                                        value: "Elektronik",
-                                        child: Text("Elektronik"),
-                                      )
-                                    ],
-                                    hint: const Text("Jenis Sampah"),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _jenis = value;
-                                        // measureList.add(measure);
-                                      });
-                                    },
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Pilih jenis sampah';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (value) {
-                                      setState(() {
-                                        _jenis = value;
-                                      });
-                                    }),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                      labelText: 'Berat total (Kg)',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20.0)),
-                                        borderSide: BorderSide(
-                                            color: Colors.black, width: 1.0),
-                                      ),
-                                      border: OutlineInputBorder()),
-                                  keyboardType: TextInputType.number,
-                                  validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty ||
-                                        value
-                                            .contains(RegExp(r'^[a-zA-Z\-]'))) {
-                                      return 'Use only numbers!';
-                                    }
-                                    return null;
-                                  },
-                                  onFieldSubmitted: (value) {
-                                    setState(() {
-                                      berat = value;
-                                      // bodyTempList.add(bodyTemp);
-                                    });
-                                  },
-                                  onChanged: (value) {
-                                    setState(() {
-                                      berat = value;
-                                    });
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 5, 89, 91),
-                                      minimumSize: const Size.fromHeight(60)),
-                                  onPressed: () {
-                                    // Validate returns true if the form is valid, or false otherwise.
-                                    if (_formKey.currentState!.validate()) {
-                                      _submit(context, request);
-                                    }
-                                  },
-                                  child: const Text("Submit"),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: <Widget>[
+                const Align(
+                  alignment: Alignment.topLeft,
+                  child: Text("Masukan Data Deposit",
+                      style: TextStyle(
+                        fontSize: 24,
+                      )),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Form(
+                  key: _formKeyToken,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      const SizedBox(
+                        height: 20,
                       ),
-                    ),
-                  );
-                }
-              }
-            }));
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Token User',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.0),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'This field is required';
+                          } else if (value.length != 6 ||
+                              !RegExp(r'^[A-Z]{6}$').hasMatch(value)) {
+                            return 'Please enter exactly 6 uppercase letters';
+                          }
+                          return null;
+                        },
+                        onFieldSubmitted: (value) {
+                          setState(() {
+                            _token = value;
+                          });
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _token = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 5, 89, 91),
+                            minimumSize: const Size.fromHeight(60)),
+                        onPressed: () {
+                          // Validate returns true if the form is valid, or false otherwise.
+                          if (_formKeyToken.currentState!.validate()) {
+                            _search(context, request);
+                          }
+                        },
+                        child: const Text("Cari",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16)),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
+                        readOnly: true,
+                        decoration: const InputDecoration(
+                          enabled: false,
+                          labelText: 'Username',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.0),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        controller: TextEditingController(
+                            text: _username == '' ? 'Not Found' : _username),
+                      )
+                    ],
+                  ),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      DropdownButtonFormField<String>(
+                        value: _waste_type,
+                        decoration: const InputDecoration(
+                          labelText: 'Method',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.0),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        items:
+                            list.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value.toLowerCase(),
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _waste_type = value!;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                            labelText: 'Berat total (Kg)',
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 1.0),
+                            ),
+                            border: OutlineInputBorder()),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              value.contains(RegExp(r'^[a-zA-Z\-]'))) {
+                            return 'Use only numbers!';
+                          }
+                          return null;
+                        },
+                        onFieldSubmitted: (value) {
+                          setState(() {
+                            _weight = value;
+                            // bodyTempList.add(bodyTemp);
+                          });
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _weight = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 5, 89, 91),
+                            minimumSize: const Size.fromHeight(60)),
+                        onPressed: () {
+                          // Validate returns true if the form is valid, or false otherwise.
+                          if (_formKey.currentState!.validate()) {
+                            _submit(context, request);
+                          }
+                        },
+                        child: const Text("Submit"),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }

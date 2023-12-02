@@ -7,25 +7,20 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:cosmocycle/utils/auth.dart';
 
 class CardDepositAdmin extends StatelessWidget {
-  const CardDepositAdmin(
-      {super.key,
-      required this.jenisSampah,
-      required this.beratSampah,
-      required this.date,
-      required this.user,
-      required this.pk,
-      required this.request,
-      required this.useAdminDeposit,
-      required this.setState});
+  const CardDepositAdmin({
+    super.key,
+    required this.pk,
+    required this.username,
+    required this.date,
+    required this.wasteType,
+    required this.weight,
+  });
 
-  final String jenisSampah;
-  final String beratSampah;
-  final DateTime date;
-  final String user;
   final String pk;
-  final UseAdminDeposit useAdminDeposit;
-  final Function setState;
-  final CookieRequest request;
+  final String username;
+  final DateTime date;
+  final String wasteType;
+  final String weight;
 
   @override
   Widget build(BuildContext context) {
@@ -36,95 +31,26 @@ class CardDepositAdmin extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5),
           child: ListTile(
-            leading: Image.asset(
-              jenisSampah == 'Plastik'
-                  ? "lib/assets/plastic.png"
-                  : "lib/assets/electronic.png",
-              height: 40,
-              width: 40,
-            ),
+            // leading: Image.asset(
+            //   wasteType == 'Plastik'
+            //       ? "lib/assets/plastic.png"
+            //       : "lib/assets/electronic.png",
+            //   height: 40,
+            //   width: 40,
+            // ),
             title: Container(
               alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    user,
+                    username,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Text(
-                    jenisSampah,
+                    wasteType,
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 29, 167, 86)),
-                        onPressed: () async {
-                          int response = await useAdminDeposit.accDeposit(
-                              context, pk, request);
-                          if (response == 200) {
-                            setState(() {});
-                            Flushbar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 29, 167, 86),
-                              flushbarPosition: FlushbarPosition.TOP,
-                              title: "Berhasil",
-                              duration: const Duration(seconds: 3),
-                              message: "Deposit berhasil disetujui",
-                            ).show(context);
-                          } else {
-                            Flushbar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 244, 105, 77),
-                              flushbarPosition: FlushbarPosition.TOP,
-                              title: "Gagal",
-                              duration: const Duration(seconds: 3),
-                              message: "Ada yang salah",
-                            ).show(context);
-                          }
-                          // Unfocus the last selected input field
-                        },
-                        child: const Text("Terima"),
-                      ),
-                      const SizedBox(
-                        width: 3,
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 244, 105, 77)),
-                        onPressed: () async {
-                          int response = await useAdminDeposit.delDeposit(
-                              context, pk, request);
-                          if (response == 200) {
-                            setState(() {});
-                            Flushbar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 29, 167, 86),
-                              flushbarPosition: FlushbarPosition.TOP,
-                              title: "Berhasil",
-                              duration: const Duration(seconds: 3),
-                              message: "Deposit berhasil ditolak",
-                            ).show(context);
-                          } else {
-                            Flushbar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 244, 105, 77),
-                              flushbarPosition: FlushbarPosition.TOP,
-                              title: "Gagal",
-                              duration: const Duration(seconds: 3),
-                              message: "Ada yang salah",
-                            ).show(context);
-                          }
-                          // Unfocus the last selected input field
-                        },
-                        child: const Text("Tolak"),
-                      ),
-                    ],
-                  )
                 ],
               ),
             ),
@@ -135,7 +61,7 @@ class CardDepositAdmin extends StatelessWidget {
                   height: 3,
                 ),
                 Text(
-                  "$beratSampah kg",
+                  "$weight kg",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
