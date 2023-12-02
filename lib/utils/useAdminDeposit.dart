@@ -1,8 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:convert';
-
-import 'package:cosmocycle/models/UserData.dart';
 import 'package:cosmocycle/models/Deposit.dart';
 
 class UseAdminDeposit {

@@ -6,21 +6,22 @@ import 'package:intl/intl.dart';
 class CardDepositUser extends StatelessWidget {
   const CardDepositUser({
     super.key,
-    required this.poin,
-    required this.totalHarga,
-    required this.jenisSampah,
-    required this.beratSampah,
+    required this.pk,
+    required this.username,
     required this.date,
-    required this.isApprove,
+    required this.wasteType,
+    required this.weight,
+    required this.totalPrice,
+    required this.poin,
   });
 
-  final String poin;
-  final String totalHarga;
-  final String jenisSampah;
-  final String beratSampah;
+  final String pk;
+  final String username;
   final DateTime date;
-  final String isApprove;
-
+  final String wasteType;
+  final String weight;
+  final String totalPrice;
+  final String poin;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,20 +30,20 @@ class CardDepositUser extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5),
           child: ListTile(
-            leading: Image.asset(
-              jenisSampah == 'Plastik'
-                  ? "lib/assets/plastic.png"
-                  : "lib/assets/electronic.png",
-              height: 40,
-              width: 40,
-            ),
+            // leading: Image.asset(
+            //   jenisSampah == 'Plastik'
+            //       ? "lib/assets/plastic.png"
+            //       : "lib/assets/electronic.png",
+            //   height: 40,
+            //   width: 40,
+            // ),
             title: Container(
               alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    jenisSampah,
+                    wasteType,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Text(
@@ -50,19 +51,8 @@ class CardDepositUser extends StatelessWidget {
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                   Text(
-                    "Saldo: $totalHarga",
+                    "Saldo: $totalPrice",
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-                  ),
-                  Text(
-                    isApprove,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: isApprove == 'DITERIMA'
-                            ? Colors.green
-                            : isApprove == 'DITOLAK'
-                                ? Colors.red
-                                : Colors.yellow),
                   ),
                 ],
               ),
@@ -74,7 +64,7 @@ class CardDepositUser extends StatelessWidget {
                   height: 3,
                 ),
                 Text(
-                  "$beratSampah kg",
+                  "$weight kg",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,

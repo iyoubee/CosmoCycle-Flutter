@@ -2,9 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:cosmocycle/utils/useAdminDeposit.dart';
-import 'package:another_flushbar/flushbar.dart';
-import 'package:cosmocycle/utils/auth.dart';
 
 class CardDepositAdmin extends StatelessWidget {
   const CardDepositAdmin({
@@ -14,6 +11,8 @@ class CardDepositAdmin extends StatelessWidget {
     required this.date,
     required this.wasteType,
     required this.weight,
+    required this.totalPrice,
+    required this.poin,
   });
 
   final String pk;
@@ -21,7 +20,8 @@ class CardDepositAdmin extends StatelessWidget {
   final DateTime date;
   final String wasteType;
   final String weight;
-
+  final String totalPrice;
+  final String poin;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,6 +49,14 @@ class CardDepositAdmin extends StatelessWidget {
                   ),
                   Text(
                     wasteType,
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  ),
+                  Text(
+                    "Poin: $poin",
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  ),
+                  Text(
+                    "Saldo: $totalPrice",
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                 ],

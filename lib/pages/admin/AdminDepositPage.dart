@@ -54,6 +54,9 @@ class _AdminDepositPage extends State<AdminDepositPage> {
                           wasteType: snapshot.data![index].fields.wasteType,
                           weight:
                               snapshot.data![index].fields.weight.toString(),
+                          totalPrice: snapshot.data![index].fields.totalPrice
+                              .toString(),
+                          poin: snapshot.data![index].fields.poin.toString(),
                         ));
               }
             }
