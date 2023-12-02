@@ -83,9 +83,9 @@ class _LandingPageState extends State<LandingPage> {
                               Text(
                                 "Mengubah Limbah Kecantikan Menjadi Kekayaan Lingkungan: Teman Daur Ulang Kosmetikmu",
                                 style: TextStyle(
-                                    color: Colors.white54,
                                     fontSize: 20,
-                                    fontWeight: FontWeight.w500),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
                               SizedBox(
                                 height: 20,
@@ -133,7 +133,7 @@ class _LandingPageState extends State<LandingPage> {
                                 "Register",
                                 style: TextStyle(
                                     fontSize: 16,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               )),
                         ),
