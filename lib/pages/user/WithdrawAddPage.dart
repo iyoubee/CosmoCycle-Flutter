@@ -7,6 +7,10 @@ import 'package:cosmocycle/utils/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:cosmocycle/utils/useUserWithdraw.dart';
 
+const List<String> list = <String>['E-Wallet', 'Bank Transfer'];
+const List<String> wallet = <String>['OVO', 'Gopay', 'DANA', 'ShopeePay'];
+const List<String> bank = <String>['BCA', "MANDIRI", 'BNI', 'BRI'];
+
 class WithdrawAddPage extends StatefulWidget {
   const WithdrawAddPage({super.key});
 
@@ -19,7 +23,11 @@ class _WithdrawAddPageState extends State<WithdrawAddPage> {
 
   UseUserWithdraw useUserWithdraw = UseUserWithdraw();
 
-  String _jumlah = "";
+  String _amount = "";
+  String _method = "e-wallet";
+  String _provider_wallet = "ovo";
+  String _provider_bank = 'bca';
+  String _accountNo = "";
 
   void _submit(context, request) {
     showDialog<void>(
@@ -37,7 +45,7 @@ class _WithdrawAddPageState extends State<WithdrawAddPage> {
                         style: TextStyle(fontWeight: FontWeight.w700))),
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Text(_jumlah),
+                  child: Text(_amount),
                 ),
               ],
             ),
@@ -68,7 +76,7 @@ class _WithdrawAddPageState extends State<WithdrawAddPage> {
                   child: const Text('Konfirmasi'),
                   onPressed: () async {
                     final response = await useUserWithdraw
-                        .addWithdraw(context, request, _jumlah)
+                        .addWithdraw(context, request, _amount)
                         .then((value) => {
                               if (value['status'] == 200)
                                 {
@@ -182,13 +190,144 @@ class _WithdrawAddPageState extends State<WithdrawAddPage> {
                         },
                         onFieldSubmitted: (value) {
                           setState(() {
-                            _jumlah = value;
+                            _amount = value;
                             // bodyTempList.add(bodyTemp);
                           });
                         },
                         onChanged: (value) {
                           setState(() {
-                            _jumlah = value;
+                            _amount = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      DropdownButtonFormField<String>(
+                        value: _method,
+                        decoration: const InputDecoration(
+                          labelText: 'Method',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.0),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        items:
+                            list.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value.toLowerCase(),
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _method = value!;
+                          });
+                        },
+                      ),
+
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      // Dropdown for Provider (dependent on Method)
+                      if (_method == 'e-wallet')
+                        DropdownButtonFormField<String>(
+                          value: _provider_wallet,
+                          decoration: const InputDecoration(
+                            labelText: 'Provider',
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 1.0),
+                            ),
+                            border: OutlineInputBorder(),
+                          ),
+                          items: wallet
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value.toLowerCase(),
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _provider_wallet = value!;
+                            });
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select a provider';
+                            }
+                            return null;
+                          },
+                        )
+                      else if (_method == 'bank transfer')
+                        DropdownButtonFormField<String>(
+                          value: _provider_bank,
+                          decoration: const InputDecoration(
+                            labelText: 'Provider',
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 1.0),
+                            ),
+                            border: OutlineInputBorder(),
+                          ),
+                          items: bank
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value.toLowerCase(),
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _provider_bank = value!;
+                            });
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select a provider';
+                            }
+                            return null;
+                          },
+                        ),
+                      const SizedBox(
+                        height: 20,
+                      ), // TextFormField for Account Number
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'No.Rek atau No.Tlp',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.0),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              !RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                            return 'Account number must be 10 digits';
+                          }
+                          return null;
+                        },
+                        onFieldSubmitted: (value) {
+                          setState(() {
+                            _accountNo = value;
+                          });
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _accountNo = value;
                           });
                         },
                       ),
