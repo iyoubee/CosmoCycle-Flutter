@@ -27,16 +27,14 @@ class UseAdminDeposit {
       {"token": token},
     );
 
+    // Assuming the backend sends a JSON response, decode it
     return response;
   }
 
-  addDeposit(context, request, username, jenisSampah, beratSampah) async {
+  addDeposit(context, request, username, waste_type, weight) async {
     var response = await request.post(
-        'https://trashsure.iyoubee.xyz/flutter/admin/deposit/add/', {
-      "user": username,
-      "jenisSampah": jenisSampah,
-      "beratSampah": beratSampah
-    });
+        'http://192.168.56.1:8000/api/admin/deposit/add',
+        {"username": username, "waste_type": waste_type, "weight": weight});
 
     return response['status'];
   }

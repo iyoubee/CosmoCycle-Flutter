@@ -28,6 +28,8 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
   int _id = -1;
   String _weight = "";
   String _waste_type = "plastic";
+  bool _enabledText = true;
+  bool _disabledButton = false;
 
   void _submit(context, request) {
     showDialog<void>(
@@ -146,6 +148,8 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
       setState(() {
         _id = userId;
         _username = username;
+        _enabledText = false;
+        _disabledButton = true;
       });
 
       Flushbar(
@@ -166,9 +170,8 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
         flushbarPosition: FlushbarPosition.TOP,
         title: "Gagal",
         duration: const Duration(seconds: 3),
-        message: "Error: $error",
+        message: "Not Found",
       ).show(context);
-      print("Error: $error");
     }
   }
 
@@ -240,6 +243,7 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
                           }
                           return null;
                         },
+                        enabled: _enabledText,
                         onFieldSubmitted: (value) {
                           setState(() {
                             _token = value;
@@ -261,7 +265,8 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
                             minimumSize: const Size.fromHeight(60)),
                         onPressed: () {
                           // Validate returns true if the form is valid, or false otherwise.
-                          if (_formKeyToken.currentState!.validate()) {
+                          if (_formKeyToken.currentState!.validate() &&
+                              !_disabledButton) {
                             _search(context, request);
                           }
                         },
