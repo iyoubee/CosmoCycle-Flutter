@@ -7,8 +7,8 @@ import 'package:cosmocycle/models/UserData.dart';
 class UseUserPrize {
   // To fetch prize data from admin
   Future<List<Prize>> getPrize(request) async {
-    var response = await request
-        .get('https://trashsure.iyoubee.xyz/flutter/user/prize/get/');
+    var response =
+        await request.get('http://192.168.56.1:8000/api/user/prize/get');
 
     // melakukan decode response menjadi bentuk json
     var data = response;
@@ -25,8 +25,8 @@ class UseUserPrize {
 
   // To fetch redeemed prize data from certain user
   Future<List<RedeemedPrize>> getRedeemedPrize(request) async {
-    var response = await request
-        .get('https://trashsure.iyoubee.xyz/flutter/user/prize/redeem/get/');
+    var response =
+        await request.get('http://192.168.56.1:8000/api/user/prize/redeem/get');
 
     // melakukan decode response menjadi bentuk json
     var data = response;
@@ -60,8 +60,8 @@ class UseUserPrize {
 
   // Method to get user points
   Future<int> getPoints(request) async {
-    var response = await request
-        .get('https://trashsure.iyoubee.xyz/flutter/user/data/get/');
+    var response =
+        await request.get('http://192.168.56.1:8000/api/user/data/get');
 
     var data = response;
 

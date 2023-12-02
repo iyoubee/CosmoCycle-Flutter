@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:cosmocycle/components/button_add_deposit.dart';
 import 'package:cosmocycle/components/card_deposit_user.dart';
 import 'package:cosmocycle/utils/useUserDeposit.dart';
 import 'package:cosmocycle/utils/auth.dart';

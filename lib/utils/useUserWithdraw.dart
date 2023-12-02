@@ -5,8 +5,8 @@ import 'package:cosmocycle/models/Withdraw.dart';
 
 class UseUserWithdraw {
   Future<List<Withdraw>> getWithdraw(request) async {
-    var response = await request
-        .get('https://trashsure.iyoubee.xyz/flutter/user/withdraw/get/');
+    var response =
+        await request.get('http://192.168.56.1:8000/api/user/withdraw/get');
 
     var data = response;
 
@@ -20,8 +20,8 @@ class UseUserWithdraw {
   }
 
   Future<List<UserData>> getBalance(request) async {
-    var response = await request
-        .get('https://trashsure.iyoubee.xyz/flutter/user/data/get/');
+    var response =
+        await request.get('http://192.168.56.1:8000/api/user/data/get');
 
     var data = response;
 
