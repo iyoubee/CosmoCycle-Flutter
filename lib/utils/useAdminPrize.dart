@@ -4,8 +4,8 @@ import 'package:cosmocycle/models/Prize.dart';
 
 class UseAdminPrize {
   Future<List<Prize>> getAdminPrize(request) async {
-    var response =
-        await request.get('http://192.168.56.1:8000/api/admin/prize/get');
+    var response = await request
+        .get('https://web-production-276d.up.railway.app/api/admin/prize/get');
 
     var data = response;
 
@@ -20,7 +20,7 @@ class UseAdminPrize {
 
   addPrize(context, request, title, poin, stok, desc, picture) async {
     var response = await request.post(
-        'http://192.168.56.1:8000/api/admin/prize/add', {
+        'https://web-production-276d.up.railway.app/api/admin/prize/add', {
       "title": title,
       "poin": poin,
       "stok": stok,
@@ -32,8 +32,9 @@ class UseAdminPrize {
   }
 
   delPrize(context, pk, request) async {
-    var response = await request
-        .post('http://192.168.56.1:8000/api/admin/prize/del', {"id": pk});
+    var response = await request.post(
+        'https://web-production-276d.up.railway.app/api/admin/prize/del',
+        {"id": pk});
 
     return response['status'];
   }
