@@ -2,8 +2,6 @@
 //
 //     final userData = userDataFromJson(jsonString);
 
-// ignore_for_file: file_names
-
 import 'dart:convert';
 
 List<UserData> userDataFromJson(String str) =>
@@ -13,15 +11,15 @@ String userDataToJson(List<UserData> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UserData {
+  String model;
+  int pk;
+  Fields fields;
+
   UserData({
     required this.model,
     required this.pk,
     required this.fields,
   });
-
-  String model;
-  int pk;
-  Fields fields;
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         model: json["model"],
@@ -37,28 +35,32 @@ class UserData {
 }
 
 class Fields {
+  int user;
+  String username;
+  String token;
+  int poin;
+  int balance;
+
   Fields({
     required this.user,
-    required this.email,
+    required this.username,
+    required this.token,
     required this.poin,
     required this.balance,
   });
 
-  int user;
-  String email;
-  int poin;
-  int balance;
-
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
         user: json["user"],
-        email: json["email"],
+        username: json["username"],
+        token: json["token"],
         poin: json["poin"],
         balance: json["balance"],
       );
 
   Map<String, dynamic> toJson() => {
         "user": user,
-        "email": email,
+        "username": username,
+        "token": token,
         "poin": poin,
         "balance": balance,
       };

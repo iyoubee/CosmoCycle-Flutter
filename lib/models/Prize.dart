@@ -2,8 +2,6 @@
 //
 //     final prize = prizeFromJson(jsonString);
 
-// ignore_for_file: file_names
-
 import 'dart:convert';
 
 List<Prize> prizeFromJson(String str) =>
@@ -13,15 +11,15 @@ String prizeToJson(List<Prize> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Prize {
+  String model;
+  int pk;
+  Fields fields;
+
   Prize({
     required this.model,
     required this.pk,
     required this.fields,
   });
-
-  String model;
-  int pk;
-  Fields fields;
 
   factory Prize.fromJson(Map<String, dynamic> json) => Prize(
         model: json["model"],
@@ -37,27 +35,31 @@ class Prize {
 }
 
 class Fields {
+  String title;
+  String picture;
+  int poin;
+  int stok;
+  String desc;
+
   Fields({
-    required this.nama,
+    required this.title,
+    required this.picture,
     required this.poin,
     required this.stok,
     required this.desc,
   });
 
-  String nama;
-  int poin;
-  int stok;
-  String desc;
-
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
-        nama: json["nama"],
+        title: json["title"],
+        picture: json["picture"],
         poin: json["poin"],
         stok: json["stok"],
         desc: json["desc"],
       );
 
   Map<String, dynamic> toJson() => {
-        "nama": nama,
+        "title": title,
+        "picture": picture,
         "poin": poin,
         "stok": stok,
         "desc": desc,
