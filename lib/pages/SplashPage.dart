@@ -1,7 +1,10 @@
 // ignore_for_file: file_names, use_build_context_synchronously
 
+import 'package:cosmocycle/pages/admin/AdminPage.dart';
+import 'package:cosmocycle/utils/useRole.dart';
 import 'package:flutter/material.dart';
 import 'package:cosmocycle/pages/LandingPage.dart';
+import 'package:cosmocycle/pages/user/UserPage.dart';
 import 'package:cosmocycle/utils/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -21,17 +24,44 @@ class _SplashPageState extends State<SplashPage> {
 
   void _checkLoggedInAndNavigate() async {
     final request = context.read<CookieRequest>();
+
     await request.init();
     if (request.loggedIn) {
-      await Future.delayed(const Duration(
-          seconds: 3)); // Add a 3-second delay// Add a small delay
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const UserPage(idx: 0)),
-      // );
+      UseRole useRole = UseRole();
+      try {
+        final roleResponse = await useRole.getRole(request);
+
+        if (roleResponse.containsKey("isUser") &&
+            roleResponse["isUser"] == "true") {
+          // Check the role and navigate accordingly
+          String role = roleResponse["role"];
+          if (role == "user") {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const UserPage(idx: 1)),
+            );
+          } else if (role == "admin") {
+            // Handle admin role
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const AdminPage(idx: 1)),
+            );
+          }
+        } else {
+          // Handle invalid response
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LandingPage()),
+          );
+        }
+      } catch (error) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LandingPage()),
+        );
+      }
     } else {
-      await Future.delayed(const Duration(
-          seconds: 3)); // Add a 3-second delay // Add a small delay
+      // Add a 3-second delay // Add a small delay
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LandingPage()),

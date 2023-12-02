@@ -2,8 +2,6 @@
 //
 //     final deposit = depositFromJson(jsonString);
 
-// ignore_for_file: file_names
-
 import 'dart:convert';
 
 List<Deposit> depositFromJson(String str) =>
@@ -13,15 +11,15 @@ String depositToJson(List<Deposit> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Deposit {
+  String model;
+  int pk;
+  Fields fields;
+
   Deposit({
     required this.model,
     required this.pk,
     required this.fields,
   });
-
-  String model;
-  int pk;
-  Fields fields;
 
   factory Deposit.fromJson(Map<String, dynamic> json) => Deposit(
         model: json["model"],
@@ -37,35 +35,32 @@ class Deposit {
 }
 
 class Fields {
+  int user;
+  DateTime date;
+  String username;
+  String wasteType;
+  int weight;
+  int poin;
+  int totalPrice;
+
   Fields({
     required this.user,
     required this.date,
     required this.username,
-    required this.jenisSampah,
-    required this.beratSampah,
+    required this.wasteType,
+    required this.weight,
     required this.poin,
-    required this.totalHarga,
-    required this.isApprove,
+    required this.totalPrice,
   });
-
-  int user;
-  DateTime date;
-  String username;
-  String jenisSampah;
-  int beratSampah;
-  int poin;
-  int totalHarga;
-  String isApprove;
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
         user: json["user"],
         date: DateTime.parse(json["date"]),
         username: json["username"],
-        jenisSampah: json["jenisSampah"],
-        beratSampah: json["beratSampah"],
+        wasteType: json["waste_type"],
+        weight: json["weight"],
         poin: json["poin"],
-        totalHarga: json["totalHarga"],
-        isApprove: json["isApprove"],
+        totalPrice: json["total_price"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -73,10 +68,9 @@ class Fields {
         "date":
             "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
         "username": username,
-        "jenisSampah": jenisSampah,
-        "beratSampah": beratSampah,
+        "waste_type": wasteType,
+        "weight": weight,
         "poin": poin,
-        "totalHarga": totalHarga,
-        "isApprove": isApprove,
+        "total_price": totalPrice,
       };
 }

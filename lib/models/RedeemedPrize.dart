@@ -2,8 +2,6 @@
 //
 //     final redeemedPrize = redeemedPrizeFromJson(jsonString);
 
-// ignore_for_file: file_names
-
 import 'dart:convert';
 
 List<RedeemedPrize> redeemedPrizeFromJson(String str) =>
@@ -14,15 +12,15 @@ String redeemedPrizeToJson(List<RedeemedPrize> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class RedeemedPrize {
+  String model;
+  int pk;
+  Fields fields;
+
   RedeemedPrize({
     required this.model,
     required this.pk,
     required this.fields,
   });
-
-  String model;
-  int pk;
-  Fields fields;
 
   factory RedeemedPrize.fromJson(Map<String, dynamic> json) => RedeemedPrize(
         model: json["model"],
@@ -38,29 +36,29 @@ class RedeemedPrize {
 }
 
 class Fields {
+  int user;
+  int stok;
+  String title;
+  String desc;
+
   Fields({
     required this.user,
     required this.stok,
-    required this.nama,
+    required this.title,
     required this.desc,
   });
-
-  int user;
-  int stok;
-  String nama;
-  String desc;
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
         user: json["user"],
         stok: json["stok"],
-        nama: json["nama"],
+        title: json["title"],
         desc: json["desc"],
       );
 
   Map<String, dynamic> toJson() => {
         "user": user,
         "stok": stok,
-        "nama": nama,
+        "title": title,
         "desc": desc,
       };
 }
