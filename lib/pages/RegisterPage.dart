@@ -34,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
     super.initState();
   }
 
-  String _email = "";
+  String _username = "";
   String _password = "";
 
   final _formKey = GlobalKey<FormState>();
@@ -136,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     emailController: emailController,
                                     onSaved: (String? value) {
                                       setState(() {
-                                        _email = value!;
+                                        _username = value!;
                                       });
                                     },
                                   ),
@@ -167,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       _formKey.currentState?.save();
                                       final response = await request
                                           .register({
-                                            'username': _email,
+                                            'username': _username,
                                             'password': _password,
                                           })
                                           .then((value) => {

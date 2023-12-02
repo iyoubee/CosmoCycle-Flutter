@@ -58,6 +58,29 @@ class CookieRequest {
     return json.decode(response.body);
   }
 
+  Future<http.Response> login2(dynamic data) async {
+    String url = "http://192.168.56.1:8000/api/login";
+    if (kIsWeb) {
+      dynamic c = _client;
+      c.withCredentials = true;
+    }
+
+    http.Response response =
+        await _client.post(Uri.parse(url), body: data, headers: headers);
+
+    await _updateCookie(response);
+
+    if (response.statusCode == 200) {
+      loggedIn = true;
+      jsonData = json.decode(response.body);
+    } else {
+      loggedIn = false;
+    }
+
+    // Return the entire response object
+    return response;
+  }
+
   Future<dynamic> register(dynamic data) async {
     String url = "http://192.168.56.1:8000/api/register";
     if (kIsWeb) {
@@ -69,7 +92,7 @@ class CookieRequest {
         await _client.post(Uri.parse(url), body: data, headers: headers);
 
     if (response.statusCode == 200) {
-      http.Response response = await login(data);
+      http.Response response = await login2(data);
       return json.decode(response.body);
     } else {
       return json.decode(response.body);
@@ -108,14 +131,19 @@ class CookieRequest {
       dynamic c = _client;
       c.withCredentials = true;
     }
+
     // Add additional header
     headers['Content-Type'] = 'application/json; charset=UTF-8';
+
     http.Response response =
         await _client.post(Uri.parse(url), body: data, headers: headers);
+
     // Remove used additional header
     headers.remove('Content-Type');
     _updateCookie(response);
-    return json.decode(response.body); // Expects and returns JSON request body
+
+    // Return the response body directly
+    return response.body;
   }
 
   Future _updateCookie(http.Response response) async {

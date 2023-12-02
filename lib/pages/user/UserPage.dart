@@ -71,7 +71,7 @@ class _UserPageState extends State<UserPage> {
                 onPressed: () async {
                   // do something
                   final response = await request
-                      .logout("https://trashsure.iyoubee.xyz/flutter/logout/")
+                      .logout("http://192.168.56.1:8000/api/logout")
                       .then((value) => {
                             if (value['status'] == 200)
                               {
