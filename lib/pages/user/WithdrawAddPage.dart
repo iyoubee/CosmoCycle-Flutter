@@ -62,6 +62,32 @@ class _WithdrawAddPageState extends State<WithdrawAddPage> {
                   alignment: Alignment.topLeft,
                   child: Text(_amount),
                 ),
+                const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Metode:",
+                        style: TextStyle(fontWeight: FontWeight.w700))),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(_method),
+                ),
+                const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Provider:",
+                        style: TextStyle(fontWeight: FontWeight.w700))),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(_method == "e-wallet"
+                      ? _provider_wallet
+                      : _provider_bank),
+                ),
+                const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Tujuan:",
+                        style: TextStyle(fontWeight: FontWeight.w700))),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(_accountNo),
+                ),
               ],
             ),
           ),
@@ -91,7 +117,15 @@ class _WithdrawAddPageState extends State<WithdrawAddPage> {
                   child: const Text('Konfirmasi'),
                   onPressed: () async {
                     final response = await useUserWithdraw
-                        .addWithdraw(context, request, _amount)
+                        .addWithdraw(
+                            context,
+                            request,
+                            _method,
+                            _method == "e-wallet"
+                                ? _provider_wallet
+                                : _provider_bank,
+                            _accountNo,
+                            _amount)
                         .then((value) => {
                               if (value['status'] == 200)
                                 {
@@ -355,7 +389,9 @@ class _WithdrawAddPageState extends State<WithdrawAddPage> {
                             _submit(context, request);
                           }
                         },
-                        child: const Text("Submit"),
+                        child: const Text("Submit",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16)),
                       ),
                     ],
                   ),

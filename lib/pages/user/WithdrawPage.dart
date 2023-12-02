@@ -84,11 +84,11 @@ class _WithdrawPageState extends State<WithdrawPage> {
               const SizedBox(
                 height: 20,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  const Text(
+                  Text(
                     "History",
                     style: TextStyle(
                         color: Colors.black87,
@@ -111,9 +111,9 @@ class _WithdrawPageState extends State<WithdrawPage> {
                         alignment: Alignment.center,
                         margin: EdgeInsets.symmetric(
                             vertical: MediaQuery.of(context).size.height / 7),
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Icon(
                               Icons.credit_card_off_outlined,
                               size: 50,
@@ -138,7 +138,10 @@ class _WithdrawPageState extends State<WithdrawPage> {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (_, index) => CardWithdraw(
                               date: snapshot.data![index].fields.date,
-                              jumlah: snapshot.data![index].fields.jumlah));
+                              metode: snapshot.data![index].fields.method,
+                              accountNo: snapshot.data![index].fields.accountNo,
+                              jumlah: snapshot.data![index].fields.amount
+                                  .toString()));
                     }
                   }
                 },
@@ -154,7 +157,10 @@ class _WithdrawPageState extends State<WithdrawPage> {
         },
         tooltip: 'Add Withdraw',
         backgroundColor: const Color.fromARGB(255, 5, 89, 91),
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }

@@ -31,18 +31,11 @@ class _AdminDepositPage extends State<AdminDepositPage> {
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(
                       vertical: MediaQuery.of(context).size.height / 4),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        "lib/assets/depo.jpg",
-                        width: 50,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Text(
-                        "Belum ada deposit yang bisa disetujui",
+                      Text(
+                        "Belum ada deposit",
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 16,
@@ -55,15 +48,15 @@ class _AdminDepositPage extends State<AdminDepositPage> {
                 return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (_, index) => CardDepositAdmin(
-                          jenisSampah: snapshot.data![index].fields.jenisSampah,
-                          user: snapshot.data![index].fields.username,
-                          beratSampah: snapshot.data![index].fields.beratSampah
-                              .toString(),
                           pk: snapshot.data![index].pk.toString(),
-                          request: request,
-                          setState: setState,
-                          useAdminDeposit: useAdminDeposit,
+                          username: snapshot.data![index].fields.username,
                           date: snapshot.data![index].fields.date,
+                          wasteType: snapshot.data![index].fields.wasteType,
+                          weight:
+                              snapshot.data![index].fields.weight.toString(),
+                          totalPrice: snapshot.data![index].fields.totalPrice
+                              .toString(),
+                          poin: snapshot.data![index].fields.poin.toString(),
                         ));
               }
             }
@@ -76,7 +69,10 @@ class _AdminDepositPage extends State<AdminDepositPage> {
           },
           tooltip: 'Add Deposit',
           backgroundColor: const Color.fromARGB(255, 5, 89, 91),
-          child: const Icon(Icons.add),
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ));
   }
 }

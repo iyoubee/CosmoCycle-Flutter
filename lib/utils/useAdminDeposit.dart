@@ -1,12 +1,11 @@
 // ignore_for_file: file_names
 
-import 'package:cosmocycle/models/UserData.dart';
-import '../models/Deposit.dart';
+import 'package:cosmocycle/models/Deposit.dart';
 
 class UseAdminDeposit {
   Future<List<Deposit>> getAdminDeposit(request) async {
-    var response = await request
-        .get('https://trashsure.iyoubee.xyz/flutter/admin/deposit/get/');
+    var response =
+        await request.get('http://192.168.56.1:8000/api/admin/deposit/get');
 
     var data = response;
 
@@ -19,43 +18,20 @@ class UseAdminDeposit {
     return depositList;
   }
 
-  Future<List<UserData>> getUsername(request) async {
-    var response = await request
-        .get('https://trashsure.iyoubee.xyz/flutter/admin/username/get/');
+  Future<dynamic> getUser(context, request, token) async {
+    var response = await request.post(
+      'http://192.168.56.1:8000/api/admin/token',
+      {"token": token},
+    );
 
-    var data = response;
-
-    List<UserData> usernameList = [];
-    for (var d in data) {
-      if (d != null) {
-        usernameList.add(UserData.fromJson(d));
-      }
-    }
-
-    return usernameList;
+    // Assuming the backend sends a JSON response, decode it
+    return response;
   }
 
-  addDeposit(context, request, username, jenisSampah, beratSampah) async {
+  addDeposit(context, request, username, waste_type, weight) async {
     var response = await request.post(
-        'https://trashsure.iyoubee.xyz/flutter/admin/deposit/add/', {
-      "user": username,
-      "jenisSampah": jenisSampah,
-      "beratSampah": beratSampah
-    });
-
-    return response['status'];
-  }
-
-  accDeposit(context, pk, request) async {
-    var response = await request.post(
-        'https://trashsure.iyoubee.xyz/flutter/admin/deposit/acc/', {"id": pk});
-
-    return response['status'];
-  }
-
-  delDeposit(context, pk, request) async {
-    var response = await request.post(
-        'https://trashsure.iyoubee.xyz/flutter/admin/deposit/del/', {"id": pk});
+        'http://192.168.56.1:8000/api/admin/deposit/add',
+        {"username": username, "waste_type": waste_type, "weight": weight});
 
     return response['status'];
   }

@@ -39,7 +39,7 @@ class _DepositPageState extends State<DepositPage> {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return const Text('Error fetching data');
-                  } else if (snapshot.data == null || !(snapshot.data is Map)) {
+                  } else if (snapshot.data == null || snapshot.data is! Map) {
                     return const Center(
                       child: Text('Token tidak ditemukan'),
                     );
@@ -127,19 +127,18 @@ class _DepositPageState extends State<DepositPage> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: snapshot.data!.length,
                           itemBuilder: (_, index) => CardDepositUser(
+                                pk: snapshot.data![index].pk.toString(),
+                                username: snapshot.data![index].fields.username,
                                 date: snapshot.data![index].fields.date,
-                                totalHarga: snapshot
-                                    .data![index].fields.totalHarga
+                                wasteType:
+                                    snapshot.data![index].fields.wasteType,
+                                totalPrice: snapshot
+                                    .data![index].fields.totalPrice
                                     .toString(),
-                                beratSampah: snapshot
-                                    .data![index].fields.beratSampah
+                                weight: snapshot.data![index].fields.weight
                                     .toString(),
-                                jenisSampah:
-                                    snapshot.data![index].fields.jenisSampah,
                                 poin: snapshot.data![index].fields.poin
                                     .toString(),
-                                isApprove:
-                                    snapshot.data![index].fields.isApprove,
                               ));
                     }
                   }

@@ -2,31 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:cosmocycle/utils/useAdminDeposit.dart';
-import 'package:another_flushbar/flushbar.dart';
-import 'package:cosmocycle/utils/auth.dart';
 
 class CardDepositAdmin extends StatelessWidget {
-  const CardDepositAdmin(
-      {super.key,
-      required this.jenisSampah,
-      required this.beratSampah,
-      required this.date,
-      required this.user,
-      required this.pk,
-      required this.request,
-      required this.useAdminDeposit,
-      required this.setState});
+  const CardDepositAdmin({
+    super.key,
+    required this.pk,
+    required this.username,
+    required this.date,
+    required this.wasteType,
+    required this.weight,
+    required this.totalPrice,
+    required this.poin,
+  });
 
-  final String jenisSampah;
-  final String beratSampah;
-  final DateTime date;
-  final String user;
   final String pk;
-  final UseAdminDeposit useAdminDeposit;
-  final Function setState;
-  final CookieRequest request;
-
+  final String username;
+  final DateTime date;
+  final String wasteType;
+  final String weight;
+  final String totalPrice;
+  final String poin;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,9 +32,13 @@ class CardDepositAdmin extends StatelessWidget {
           padding: const EdgeInsets.all(5),
           child: ListTile(
             leading: Image.asset(
-              jenisSampah == 'Plastik'
+              wasteType == 'plastic'
                   ? "lib/assets/plastic.png"
-                  : "lib/assets/electronic.png",
+                  : wasteType == 'glass'
+                      ? "lib/assets/glass.png"
+                      : wasteType == 'paper'
+                          ? "lib/assets/paper.png"
+                          : "lib/assets/crucible.png",
               height: 40,
               width: 40,
             ),
@@ -49,82 +48,21 @@ class CardDepositAdmin extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    user,
+                    username,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Text(
-                    jenisSampah,
+                    wasteType.toUpperCase(),
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 29, 167, 86)),
-                        onPressed: () async {
-                          int response = await useAdminDeposit.accDeposit(
-                              context, pk, request);
-                          if (response == 200) {
-                            setState(() {});
-                            Flushbar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 29, 167, 86),
-                              flushbarPosition: FlushbarPosition.TOP,
-                              title: "Berhasil",
-                              duration: const Duration(seconds: 3),
-                              message: "Deposit berhasil disetujui",
-                            ).show(context);
-                          } else {
-                            Flushbar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 244, 105, 77),
-                              flushbarPosition: FlushbarPosition.TOP,
-                              title: "Gagal",
-                              duration: const Duration(seconds: 3),
-                              message: "Ada yang salah",
-                            ).show(context);
-                          }
-                          // Unfocus the last selected input field
-                        },
-                        child: const Text("Terima"),
-                      ),
-                      const SizedBox(
-                        width: 3,
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 244, 105, 77)),
-                        onPressed: () async {
-                          int response = await useAdminDeposit.delDeposit(
-                              context, pk, request);
-                          if (response == 200) {
-                            setState(() {});
-                            Flushbar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 29, 167, 86),
-                              flushbarPosition: FlushbarPosition.TOP,
-                              title: "Berhasil",
-                              duration: const Duration(seconds: 3),
-                              message: "Deposit berhasil ditolak",
-                            ).show(context);
-                          } else {
-                            Flushbar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 244, 105, 77),
-                              flushbarPosition: FlushbarPosition.TOP,
-                              title: "Gagal",
-                              duration: const Duration(seconds: 3),
-                              message: "Ada yang salah",
-                            ).show(context);
-                          }
-                          // Unfocus the last selected input field
-                        },
-                        child: const Text("Tolak"),
-                      ),
-                    ],
-                  )
+                  Text(
+                    "Poin: $poin",
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  ),
+                  Text(
+                    "Saldo: $totalPrice",
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  ),
                 ],
               ),
             ),
@@ -135,7 +73,7 @@ class CardDepositAdmin extends StatelessWidget {
                   height: 3,
                 ),
                 Text(
-                  "$beratSampah kg",
+                  "$weight kg",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,

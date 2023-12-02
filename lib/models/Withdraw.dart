@@ -41,7 +41,6 @@ class Fields {
   String provider;
   String accountNo;
   int amount;
-  String isApprove;
 
   Fields({
     required this.user,
@@ -50,7 +49,6 @@ class Fields {
     required this.provider,
     required this.accountNo,
     required this.amount,
-    required this.isApprove,
   });
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
@@ -60,7 +58,6 @@ class Fields {
         provider: json["provider"],
         accountNo: json["account_no"],
         amount: json["amount"],
-        isApprove: json["isApprove"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,6 +68,5 @@ class Fields {
         "provider": provider,
         "account_no": accountNo,
         "amount": amount,
-        "isApprove": isApprove,
       };
 }

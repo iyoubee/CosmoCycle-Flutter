@@ -35,10 +35,14 @@ class UseUserWithdraw {
     return balanceList;
   }
 
-  Future<dynamic> addWithdraw(context, request, jumlah) async {
-    var response = await request
-        .post('https://trashsure.iyoubee.xyz/flutter/user/withdraw/add/', {
-      "jumlah": jumlah,
+  Future<dynamic> addWithdraw(
+      context, request, method, provider, account_no, amount) async {
+    var response =
+        await request.post('http://192.168.56.1:8000/api/user/withdraw/add', {
+      "method": method,
+      "provider": provider,
+      "account_no": account_no,
+      "amount": amount,
     });
 
     return response;

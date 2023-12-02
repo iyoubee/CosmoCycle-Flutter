@@ -37,12 +37,14 @@ class RedeemedPrize {
 
 class Fields {
   int user;
+  String picture;
   int stok;
   String title;
   String desc;
 
   Fields({
     required this.user,
+    required this.picture,
     required this.stok,
     required this.title,
     required this.desc,
@@ -50,6 +52,7 @@ class Fields {
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
         user: json["user"],
+        picture: json["picture"],
         stok: json["stok"],
         title: json["title"],
         desc: json["desc"],
@@ -57,6 +60,7 @@ class Fields {
 
   Map<String, dynamic> toJson() => {
         "user": user,
+        "picture": picture,
         "stok": stok,
         "title": title,
         "desc": desc,

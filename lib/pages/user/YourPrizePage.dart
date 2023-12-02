@@ -95,7 +95,8 @@ class _YourPrizePageState extends State<YourPrizePage> {
                           return PrizeCard(
                               pk: snapshot.data![index].pk.toString(),
                               usage: "Use",
-                              nama: snapshot.data![index].fields.nama,
+                              nama: snapshot.data![index].fields.title,
+                              picture: snapshot.data![index].fields.picture,
                               poin: "0",
                               stok:
                                   snapshot.data![index].fields.stok.toString(),

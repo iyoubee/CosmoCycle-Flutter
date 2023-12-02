@@ -11,6 +11,7 @@ class PrizeCard extends StatelessWidget {
       required this.pk,
       required this.usage,
       required this.nama,
+      required this.picture,
       required this.poin,
       required this.stok, // Default value
       required this.desc,
@@ -22,6 +23,7 @@ class PrizeCard extends StatelessWidget {
   final CookieRequest request;
   final String pk;
   final String nama;
+  final String picture;
   final String poin; // Buat handle yang redeemed prize
   final String stok;
   final String desc;
@@ -33,7 +35,6 @@ class PrizeCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20),
       width: double.infinity,
-      height: 260,
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.5),
@@ -50,8 +51,8 @@ class PrizeCard extends StatelessWidget {
               topRight: Radius.circular(20),
               topLeft: Radius.circular(20),
             ),
-            child: Image.asset(
-              "lib/assets/voucher.jpg",
+            child: Image.network(
+              picture,
               width: double.infinity,
               height: 130,
               fit: BoxFit.cover,
@@ -146,8 +147,8 @@ class PrizeCard extends StatelessWidget {
                               );
                             });
                       },
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Icon(
                             Icons.arrow_drop_down,
                             size: 30,

@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -8,10 +6,14 @@ class CardWithdraw extends StatelessWidget {
     super.key,
     required this.date,
     required this.jumlah,
+    required this.metode,
+    required this.accountNo,
   });
 
   final DateTime date;
   final String jumlah;
+  final String metode;
+  final String accountNo;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,11 @@ class CardWithdraw extends StatelessWidget {
             height: 30,
             width: 30,
           ),
-          // leading: CircleAvatar(
-          // ),
           title: Text(DateFormat.yMMMd().format(date)),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text(metode.toUpperCase()), Text(accountNo)],
+          ),
           trailing: Text(
             "Rp $jumlah",
             style: const TextStyle(color: Colors.green),
