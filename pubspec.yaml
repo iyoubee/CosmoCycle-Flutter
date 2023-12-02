@@ -58,6 +58,12 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'lib/assets/bin.png'
+  min_sdk_android: 21
+
 # The following section is specific to Flutter packages.
 flutter:
   # The following line ensures that the Material Icons font is
@@ -73,11 +79,12 @@ flutter:
     - lib/assets/bin.png
     - lib/assets/prize.jpg
     - lib/assets/voucher.jpg
-    - lib/assets/Garbage.jpg
     - lib/assets/withdraw.png
     - lib/assets/landingbg4.jpg
-    - lib/assets/electronic.png
     - lib/assets/plastic.png
+    - lib/assets/crucible.png
+    - lib/assets/paper.png
+    - lib/assets/glass.png
     - lib/assets/recycle-bin-deposit.png
     - lib/assets/depo.jpg
   # An image asset can refer to one or more resolution-specific "variants", see

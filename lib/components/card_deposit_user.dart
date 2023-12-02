@@ -30,20 +30,24 @@ class CardDepositUser extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5),
           child: ListTile(
-            // leading: Image.asset(
-            //   jenisSampah == 'Plastik'
-            //       ? "lib/assets/plastic.png"
-            //       : "lib/assets/electronic.png",
-            //   height: 40,
-            //   width: 40,
-            // ),
+            leading: Image.asset(
+              wasteType == 'plastic'
+                  ? "lib/assets/plastic.png"
+                  : wasteType == 'glass'
+                      ? "lib/assets/glass.png"
+                      : wasteType == 'paper'
+                          ? "lib/assets/paper.png"
+                          : "lib/assets/crucible.png",
+              height: 40,
+              width: 40,
+            ),
             title: Container(
               alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    wasteType,
+                    wasteType.toUpperCase(),
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Text(
