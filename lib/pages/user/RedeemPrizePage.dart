@@ -147,7 +147,7 @@ class _RedeemPrizePageState extends State<RedeemPrizePage> {
                           return PrizeCard(
                               pk: snapshot.data![index].pk.toString(),
                               usage: "Redeem",
-                              nama: snapshot.data![index].fields.nama,
+                              nama: snapshot.data![index].fields.title,
                               poin:
                                   snapshot.data![index].fields.poin.toString(),
                               stok:

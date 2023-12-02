@@ -43,17 +43,16 @@ class UseUserPrize {
 
   // Method to redeem the prize
   redeemPrize(context, pk, request) async {
-    var response = await request.post(
-        'https://trashsure.iyoubee.xyz/flutter/user/prize/redeem/', {"id": pk});
+    var response = await request
+        .post('http://192.168.56.1:8000/api/user/prize/redeem', {"id": pk});
 
     return response['message'];
   }
 
   // Method to use the prize
   usePrize(context, pk, request) async {
-    var response = await request.post(
-        'https://trashsure.iyoubee.xyz/flutter/user/prize/redeem/use/',
-        {"id": pk});
+    var response = await request
+        .post('http://192.168.56.1:8000/api/user/prize/redeem/use', {"id": pk});
 
     return response['message'];
   }
