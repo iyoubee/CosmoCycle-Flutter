@@ -377,7 +377,9 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
                             _submit(context, request);
                           }
                         },
-                        child: const Text("Submit"),
+                        child: const Text("Submit",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16)),
                       ),
                     ],
                   ),

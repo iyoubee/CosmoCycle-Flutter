@@ -34,7 +34,6 @@ class AdminPrizeCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       width: double.infinity,
-      height: 260,
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.5),
@@ -142,8 +141,8 @@ class AdminPrizeCard extends StatelessWidget {
                               );
                             });
                       },
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Icon(
                             Icons.arrow_drop_down,
                             size: 30,

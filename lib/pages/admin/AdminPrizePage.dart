@@ -59,7 +59,7 @@ class _AdminPrizePage extends State<AdminPrizePage> {
                           request: request,
                           pk: snapshot.data![index].pk.toString(),
                           usage: "delete",
-                          nama: snapshot.data![index].fields.nama,
+                          nama: snapshot.data![index].fields.title,
                           poin: snapshot.data![index].fields.poin.toString(),
                           stok: snapshot.data![index].fields.stok.toString(),
                           desc: snapshot.data![index].fields.desc,

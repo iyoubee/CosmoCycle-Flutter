@@ -23,6 +23,7 @@ class _AdminAddPrizePageState extends State<AdminAddPrizePage> {
   String judul = "";
   String stok = "";
   String desc = "";
+  String picture = "";
 
   void _submit(context, request) {
     showDialog<void>(
@@ -93,7 +94,7 @@ class _AdminAddPrizePageState extends State<AdminAddPrizePage> {
                   child: const Text('Konfirmasi'),
                   onPressed: () async {
                     int response = await useAdminPrize.addPrize(
-                        context, request, judul, poin, stok, desc);
+                        context, request, judul, poin, stok, desc, picture);
                     Navigator.pop(context);
                     if (response == 200) {
                       Navigator.pop(context);
@@ -319,6 +320,48 @@ class _AdminAddPrizePageState extends State<AdminAddPrizePage> {
                       const SizedBox(
                         height: 20,
                       ),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                            labelText: 'Picture URL',
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 1.0),
+                            ),
+                            border: OutlineInputBorder()),
+                        onFieldSubmitted: (value) {
+                          setState(() {
+                            picture = value;
+                          });
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            picture = value;
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Picture URL is required';
+                          }
+
+                          // Check if the input matches a URL pattern
+                          final RegExp urlPattern = RegExp(
+                            r'^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$',
+                            caseSensitive: false,
+                            multiLine: false,
+                          );
+
+                          if (!urlPattern.hasMatch(value)) {
+                            return 'Enter a valid URL';
+                          }
+
+                          return null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor:
@@ -330,7 +373,9 @@ class _AdminAddPrizePageState extends State<AdminAddPrizePage> {
                             _submit(context, request);
                           }
                         },
-                        child: const Text("Submit"),
+                        child: const Text("Submit",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16)),
                       ),
                     ],
                   ),
