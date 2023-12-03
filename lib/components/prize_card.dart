@@ -216,14 +216,7 @@ class PrizeCard extends StatelessWidget {
 
                             if (response == "Prize berhasil digunakan") {
                               setState(() {});
-                              Flushbar(
-                                backgroundColor:
-                                    const Color.fromARGB(255, 29, 167, 86),
-                                flushbarPosition: FlushbarPosition.TOP,
-                                title: "Berhasil",
-                                duration: const Duration(seconds: 3),
-                                message: "Berhasil menggunakan prize!",
-                              ).show(context);
+                              Navigator.pushNamed(context, '/user/prize/use');
                             } else {
                               Flushbar(
                                 backgroundColor:
