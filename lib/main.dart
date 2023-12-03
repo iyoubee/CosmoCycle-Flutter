@@ -10,6 +10,7 @@ import 'package:cosmocycle/pages/admin/AdminAddDepositPage.dart';
 import 'package:cosmocycle/pages/admin/AdminAddPrizePage.dart';
 import 'package:cosmocycle/pages/admin/AdminPage.dart';
 import 'package:cosmocycle/pages/user/UserPage.dart';
+import 'package:cosmocycle/pages/user/PrizeTokenPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           "/user": (BuildContext context) => const UserPage(idx: 1),
           "/user/withdraw/add": (BuildContext context) =>
               const WithdrawAddPage(),
+          "/user/prize/use": (BuildContext context) => const PrizeTokenPage(),
         },
       ),
     );
