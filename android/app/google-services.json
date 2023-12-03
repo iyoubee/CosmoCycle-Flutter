@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:666201342246:android:8fd53366bf612f478a81e7",
+        "mobilesdk_app_id": "1:666201342246:android:4d4dee3a3ff045f38a81e7",
         "android_client_info": {
-          "package_name": "com.cosmocycle"
+          "package_name": "com.example.cosmocycle"
         }
       },
       "oauth_client": [],

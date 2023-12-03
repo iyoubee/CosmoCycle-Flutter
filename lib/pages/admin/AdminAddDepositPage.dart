@@ -373,7 +373,7 @@ class _AdminAddDepositPageState extends State<AdminAddDepositPage> {
                             minimumSize: const Size.fromHeight(60)),
                         onPressed: () {
                           // Validate returns true if the form is valid, or false otherwise.
-                          if (_formKey.currentState!.validate()) {
+                          if (_formKey.currentState!.validate() && _id != -1) {
                             _submit(context, request);
                           }
                         },
